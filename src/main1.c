@@ -13,7 +13,7 @@ struct interval_t {
     double right_border;
 };
 
-double read_interval (struct interval_t *interval) {
+double read_interval(struct interval_t *interval) {
     if (printf("Enter interval's left border: ") < 0) {
 		error("Cannot write to stdout");
 		return -1;
@@ -45,15 +45,16 @@ double read_interval (struct interval_t *interval) {
 	return 0;
 }
 
-double use_simpson_rule (struct interval_t interval) {
-    return (interval.right_border - interval.left_border) / 6 * (sin(interval.left_border) + 4 * sin((interval.left_border + interval.right_border) / 2) + sin(interval.right_border));
+double use_simpson_rule(struct interval_t interval) {
+    return (interval.right_border - interval.left_border) / 6 * (sin(interval.left_border) +
+		4 * sin((interval.left_border + interval.right_border) / 2) + sin(interval.right_border));
 }
 
-double use_rectangle_method (struct interval_t interval) {
+double use_rectangle_method(struct interval_t interval) {
     return (interval.right_border - interval.left_border) * sin((interval.left_border + interval.right_border) / 2);
 }
 
-double integrate (struct interval_t interval, unsigned int number_of_rectangles, double (*integrate_function)(struct interval_t)) {
+double integrate(struct interval_t interval, unsigned int number_of_rectangles, double (*integrate_function)(struct interval_t)) {
     double area = 0.0;
     double step = (interval.right_border - interval.left_border) / (double)number_of_rectangles;
     for (unsigned int i = 0; i < number_of_rectangles; i++) {
@@ -71,7 +72,7 @@ void free_string_array(char** array, unsigned int array_length) {
 	free(array);
 }
 
-char **calculate_integrals (struct interval_t interval, unsigned int experiments_count, const int *number_of_rectangles) {
+char **calculate_integrals(struct interval_t interval, unsigned int experiments_count, const int *number_of_rectangles) {
     char **results = (char **)malloc(sizeof(char *) * experiments_count);
 	if (!results) {
         error("Cannot allocate memory for results\n");
@@ -100,7 +101,7 @@ char **calculate_integrals (struct interval_t interval, unsigned int experiments
 }
 
 int main(){
-    struct interval_t interval = {0.0, 0.0};
+    struct interval_t interval;
     if (read_interval (&interval))
         return 1;
 
